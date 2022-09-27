@@ -17,7 +17,7 @@ describe("server tests", () => {
             user: "Bob",
             wish: "A new kettle"
         }
-        const response = await request(app).post("/add-a-wish").send(wish);
+        const response = await request(app).post("/wishes/add-a-wish").send(wish);
         expect(response.statusCode).toBe(201);
     })
 

@@ -13,7 +13,7 @@ function routeSetup(app) {
         res.status(200).send("Welcome to the wishing well!");
     });
 
-    app.post("/add-a-wish", (req, res) => {
+    app.post("/wishes/add-a-wish", (req, res) => {
         try {
             let newWish = new Wish(req.body.user, req.body.wish);
             let newEntry = {
