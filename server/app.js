@@ -35,6 +35,33 @@ function routeSetup(app) {
             res.status(404).send({ error: err.message})
         }
     })
+
+    app.put("/wishes/:id", (req, res) => {
+        try {
+            const vote = req.query.vote;
+            if (vote === null || vote === undefined) {
+                throw new Error("Invalid query string");
+            }
+
+            if (vote === "grant") {
+                let curr = wishes[req.params.id].wish.grants;
+                wishes[req.params.id].wish.grants = curr + 1;
+            } else if (vote === "deny") {
+                let curr = wishes[req.params.id].wish.deny;
+                wishes[req.params.id].wish.deny = curr + 1;
+            } else {
+                throw new Error("Invalid query string");
+            }
+
+            res.status(200).send({ message: `${vote} vote added.` });
+
+        } catch (err) {
+            if (err.message === "Invalid query string") {
+                res.status(400).send({ error: err.message })
+            }
+            res.status(500).send({ error: err.message})
+        }
+    })
 }
 
 const app = express();
