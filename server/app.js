@@ -52,7 +52,7 @@ function routeSetup(app) {
                 throw new Error("Invalid query string");
             }
 
-            res.status(200).send(sortedWishes);
+            res.status(200).send(sortedWishes.slice(0, 10));
 
         } catch (err) {
             if (err.message === "Invalid query string") {
