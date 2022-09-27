@@ -7,6 +7,11 @@ describe("server tests", () => {
         expect(response.statusCode).toBe(200);
     })
 
+    test("Can see submitted wishes", async () => {
+        const response = await request(app).get("/wishes");
+        expect(response.statusCode).toBe(200);
+    })
+
     it("posts a new wish sent in json form", async () => {
         const wish = {
             user: "Bob",

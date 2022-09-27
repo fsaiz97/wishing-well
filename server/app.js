@@ -27,6 +27,14 @@ function routeSetup(app) {
             res.status(400).send({ error: error.message});
         }
     })
+
+    app.get("/wishes", (req, res) => {
+        try {
+            res.status(200).send(wishes);
+        } catch (err) {
+            res.status(404).send({ error: err.message})
+        }
+    })
 }
 
 const app = express();
