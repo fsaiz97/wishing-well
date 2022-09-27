@@ -36,6 +36,20 @@ describe("server tests", () => {
         })
     })
 
+    describe("View most/least popular wishes", () => {
+        test("Can view 10 most popular wishes", async () => {
+            const response = await request(app).get("/wishes/popular?filter=most");
+            expect(response.statusCode).toBe(200);
+            expect(response.body[0].wish.owner).toBe("Felix");
+        })
+
+        test("Can view 10 least popular wishes", async () => {
+            const response = await request(app).get("/wishes/popular?filter=least");
+            expect(response.statusCode).toBe(200);
+            expect(response.body[0].wish.owner).toBe("Anne");
+        })
+    })
+
     describe("Voting tests", () => {
         test("Can vote to grant wish", async () => {
             const response = await request(app).put("/wishes/0?vote=grant");

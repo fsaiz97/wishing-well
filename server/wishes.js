@@ -31,6 +31,10 @@ class Wish {
     totalVotes() {
         return this.grants + this.denys;
     }
+
+    popularity() {
+        return this.grants - this.denys;
+    }
 }
 
 let wishes = [

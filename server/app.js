@@ -36,6 +36,32 @@ function routeSetup(app) {
         }
     })
 
+    app.get("/wishes/popular", (req, res) => {
+        try {
+            const filter = req.query.filter;
+            if (filter === null || filter === undefined) {
+                throw new Error("Invalid query string");
+            }
+
+            let sortedWishes;
+            if (filter === "most") {
+                sortedWishes = [...wishes].sort((a, b) => { return b.wish.popularity() - a.wish.popularity(); })
+            } else if (filter === "least") {
+                sortedWishes = [...wishes].sort((a, b) => { return a.wish.popularity() - b.wish.popularity(); })
+            } else {
+                throw new Error("Invalid query string");
+            }
+
+            res.status(200).send(sortedWishes);
+
+        } catch (err) {
+            if (err.message === "Invalid query string") {
+                res.status(400).send({error: err.message})
+            }
+            res.status(500).send({error: err.message})
+        }
+    })
+
     app.get("/wishes/:id", (req, res) => {
         try {
             let id = parseInt(req.params.id);
