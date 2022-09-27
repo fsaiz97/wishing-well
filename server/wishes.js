@@ -26,8 +26,14 @@ class Wish {
 }
 
 let wishes = [
-    new Wish("Felix", "My code will be bug-free."),
-    new Wish("Bob", "A new kettle")
+    {
+        id: 0,
+        wish: new Wish("Felix", "My code will be bug-free.")
+    },
+    {
+        id: 1,
+        wish: new Wish("Anne", "To go to Antartica.")
+    }
 ]
 
 module.exports = {
