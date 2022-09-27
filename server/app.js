@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const { wishes, Wish } = require("./wishes");
+const {wishes, Wish} = require("./wishes");
 
 function middlewareSetup(app) {
     app.use(cors()); // Allow requests from other origins/machines
@@ -21,10 +21,10 @@ function routeSetup(app) {
                 wish: newWish
             };
             wishes.push(newEntry);
-            
+
             res.status(201).send(newEntry);
         } catch (error) {
-            res.status(400).send({ error: error.message});
+            res.status(400).send({error: error.message});
         }
     })
 
@@ -32,7 +32,26 @@ function routeSetup(app) {
         try {
             res.status(200).send(wishes);
         } catch (err) {
-            res.status(404).send({ error: err.message})
+            res.status(404).send({error: err.message})
+        }
+    })
+
+    app.get("/wishes/:id", (req, res) => {
+        try {
+            let id = parseInt(req.params.id);
+            res.status(200).send(wishes[id]);
+        } catch (err) {
+            res.status(404).send({error: err.message});
+        }
+    })
+
+    app.get("/wishes/:id/votes", (req, res) => {
+        try {
+            let id = parseInt(req.params.id);
+            let wish = wishes[id].wish;
+            res.status(200).send({grants: wish.grants, denys: wish.denys});
+        } catch (err) {
+            res.status(404).send({error: err.message});
         }
     })
 
@@ -53,13 +72,13 @@ function routeSetup(app) {
                 throw new Error("Invalid query string");
             }
 
-            res.status(200).send({ message: `${vote} vote added.` });
+            res.status(200).send({message: `${vote} vote added.`});
 
         } catch (err) {
             if (err.message === "Invalid query string") {
-                res.status(400).send({ error: err.message })
+                res.status(400).send({error: err.message})
             }
-            res.status(500).send({ error: err.message})
+            res.status(500).send({error: err.message})
         }
     })
 }
@@ -69,4 +88,6 @@ const app = express();
 middlewareSetup(app);
 routeSetup(app);
 
-module.exports = { app };
+module.exports = {
+    app
+};

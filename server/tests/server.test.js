@@ -21,6 +21,21 @@ describe("server tests", () => {
         expect(response.statusCode).toBe(201);
     })
 
+    describe("Viewing individual wishes", () => {
+        test("can see a particular wish", async () => {
+            const response = await request(app).get("/wishes/0");
+            expect(response.statusCode).toBe(200);
+            expect(response.body.wish.owner).toBe("Felix");
+        })
+
+        test("can see a wish's votes", async () => {
+            const response = await request(app).get("/wishes/0/votes");
+            expect(response.statusCode).toBe(200);
+            expect(response.body.grants).toEqual(1);
+            expect(response.body.denys).toEqual(0);
+        })
+    })
+
     describe("Voting tests", () => {
         test("Can vote to grant wish", async () => {
             const response = await request(app).put("/wishes/0?vote=grant");
@@ -34,6 +49,4 @@ describe("server tests", () => {
             expect(response.body).toEqual({message: "deny vote added."});
         })
     })
-
-
 })

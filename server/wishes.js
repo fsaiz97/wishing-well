@@ -14,11 +14,19 @@ class Wish {
         }
     }
 
-    get grants() { return this._votes.grants };
-    set grants(value) { this._votes.grants = value };
+    get grants() {
+        return this._votes.grants
+    };
+    set grants(value) {
+        this._votes.grants = value
+    };
 
-    get denys() { return this._votes.denys };
-    set denys(value) { return this._votes.denys = value };
+    get denys() {
+        return this._votes.denys
+    };
+    set denys(value) {
+        return this._votes.denys = value
+    };
 
     totalVotes() {
         return this.grants + this.denys;
@@ -29,12 +37,14 @@ let wishes = [
     {
         id: 0,
         wish: new Wish("Felix", "My code will be bug-free.")
-    },
-    {
+    }, {
         id: 1,
         wish: new Wish("Anne", "To go to Antartica.")
     }
 ]
+
+wishes[0].wish.grants = 1;
+wishes[1].wish.denys = 1;
 
 module.exports = {
     wishes,
