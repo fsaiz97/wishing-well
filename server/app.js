@@ -2,10 +2,12 @@ const express = require("express");
 const cors = require("cors");
 
 const {wishList, Wish} = require("./wishes");
+const routeLogger = require("./route-logger")
 
 function middlewareSetup(app) {
     app.use(cors()); // Allow requests from other origins/machines
     app.use(express.json()); // Tell Express to read the body of POST requests
+    app.use(routeLogger);
 }
 
 function routeSetup(app) {
