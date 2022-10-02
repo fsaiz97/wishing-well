@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const {wishes, Wish} = require("./wishes");
+const {wishList, Wish} = require("./wishes");
 
 function middlewareSetup(app) {
     app.use(cors()); // Allow requests from other origins/machines
@@ -18,10 +18,10 @@ function routeSetup(app) {
             console.log(req.body.name, req.body.wish)
             let newWish = new Wish(req.body.name, req.body.wish);
             let newEntry = {
-                id: wishes.length,
+                id: wishList.length,
                 wish: newWish
             };
-            wishes.push(newEntry);
+            wishList.push(newEntry);
 
             res.status(201).send(newEntry);
         } catch (error) {
@@ -31,13 +31,23 @@ function routeSetup(app) {
 
     app.get("/wishes", (req, res) => {
         try {
-            res.status(200).send(wishes);
+            res.status(200).send(wishList);
         } catch (err) {
             res.status(404).send({error: err.message})
         }
     })
 
+    app.get("/wishes/recent", (req, res) => {
+        try {
             const sortedWishes = [...wishList].sort((a, b) => { return b.wish.timestamp.getTime() - a.wish.timestamp.getTime(); })
+
+            res.status(200).send(sortedWishes.slice(0, 10));
+
+        } catch (err) {
+            res.status(500).send({error: err.message})
+        }
+    })
+
     app.get("/wishes/popular", (req, res) => {
         try {
             const filter = req.query.filter;
@@ -47,9 +57,9 @@ function routeSetup(app) {
 
             let sortedWishes;
             if (filter === "most") {
-                sortedWishes = [...wishes].sort((a, b) => { return b.wish.popularity() - a.wish.popularity(); })
+                sortedWishes = [...wishList].sort((a, b) => { return b.wish.popularity() - a.wish.popularity(); })
             } else if (filter === "least") {
-                sortedWishes = [...wishes].sort((a, b) => { return a.wish.popularity() - b.wish.popularity(); })
+                sortedWishes = [...wishList].sort((a, b) => { return a.wish.popularity() - b.wish.popularity(); })
             } else {
                 throw new Error("Invalid query string");
             }
@@ -67,7 +77,7 @@ function routeSetup(app) {
     app.get("/wishes/:id", (req, res) => {
         try {
             let id = parseInt(req.params.id);
-            res.status(200).send(wishes[id]);
+            res.status(200).send(wishList[id]);
         } catch (err) {
             res.status(404).send({error: err.message});
         }
@@ -76,13 +86,14 @@ function routeSetup(app) {
     app.get("/wishes/:id/votes", (req, res) => {
         try {
             let id = parseInt(req.params.id);
-            let wish = wishes[id].wish;
+            let wish = wishList[id].wish;
             res.status(200).send({grants: wish.grants, denys: wish.denys});
         } catch (err) {
             res.status(404).send({error: err.message});
         }
     })
 
+    // /wishes/:id?vote=voteType
     app.put("/wishes/:id", (req, res) => {
         try {
             const vote = req.query.vote;
@@ -91,11 +102,11 @@ function routeSetup(app) {
             }
 
             if (vote === "grant") {
-                let curr = wishes[req.params.id].wish.grants;
-                wishes[req.params.id].wish.grants = curr + 1;
+                let curr = wishList[req.params.id].wish.grants;
+                wishList[req.params.id].wish.grants = curr + 1;
             } else if (vote === "deny") {
-                let curr = wishes[req.params.id].wish.deny;
-                wishes[req.params.id].wish.deny = curr + 1;
+                let curr = wishList[req.params.id].wish.denys;
+                wishList[req.params.id].wish.denys = curr + 1;
             } else {
                 throw new Error("Invalid query string");
             }

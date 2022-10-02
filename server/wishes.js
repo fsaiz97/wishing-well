@@ -1,4 +1,4 @@
-// Hardcoded initial list of wishes
+// Hardcoded initial list of wishList
 
 class Wish {
     constructor(name, wish) {
@@ -44,20 +44,20 @@ class Wish {
     }
 }
 
-let wishes = [
+let wishList = [
     {
         id: 0,
         wish: new Wish("Felix", "My code will be bug-free.")
     }, {
         id: 1,
-        wish: new Wish("Anne", "To go to Antartica.")
+        wish: new Wish("Anne", "To go to Antarctica.")
     }
 ]
 
-wishes[0].wish.grants = 1;
-wishes[1].wish.denys = 1;
+wishList[0].wish.grants = 1;
+wishList[1].wish.denys = 1;
 
 module.exports = {
-    wishes,
+    wishList,
     Wish
 }
