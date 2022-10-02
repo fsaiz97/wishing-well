@@ -36,6 +36,12 @@ async function generateWishList() {
         }
     }
 
+    const goToWish = (e) => {
+
+        let wishID = e.target.firstElementChild;
+        window.location = `wish.html?id=${wishID.id}`
+    }
+    
     for (let entry of wishes) {
         const element = document.createElement("div");
         element.className = "wish";
