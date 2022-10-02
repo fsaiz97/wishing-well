@@ -25,7 +25,7 @@ describe("server tests", () => {
         test("can see a particular wish", async () => {
             const response = await request(app).get("/wishes/0");
             expect(response.statusCode).toBe(200);
-            expect(response.body.wish.owner).toBe("Felix");
+            expect(response.body.wish.name).toBe("Felix");
         })
 
         test("can see a wish's votes", async () => {
@@ -40,13 +40,13 @@ describe("server tests", () => {
         test("Can view 10 most popular wishes", async () => {
             const response = await request(app).get("/wishes/popular?filter=most");
             expect(response.statusCode).toBe(200);
-            expect(response.body[0].wish.owner).toBe("Felix");
+            expect(response.body[0].wish.name).toBe("Felix");
         })
 
         test("Can view 10 least popular wishes", async () => {
             const response = await request(app).get("/wishes/popular?filter=least");
             expect(response.statusCode).toBe(200);
-            expect(response.body[0].wish.owner).toBe("Anne");
+            expect(response.body[0].wish.name).toBe("Anne");
         })
     })
 

@@ -15,7 +15,8 @@ function routeSetup(app) {
 
     app.post("/wishes/add-a-wish", (req, res) => {
         try {
-            let newWish = new Wish(req.body.user, req.body.wish);
+            console.log(req.body.name, req.body.wish)
+            let newWish = new Wish(req.body.name, req.body.wish);
             let newEntry = {
                 id: wishes.length,
                 wish: newWish
@@ -36,6 +37,7 @@ function routeSetup(app) {
         }
     })
 
+            const sortedWishes = [...wishList].sort((a, b) => { return b.wish.timestamp.getTime() - a.wish.timestamp.getTime(); })
     app.get("/wishes/popular", (req, res) => {
         try {
             const filter = req.query.filter;

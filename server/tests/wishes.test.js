@@ -33,13 +33,13 @@ describe("Wish class tests", () => {
     it("can set vote.grants", () => {
         let wish = exampleWish();
         wish.grants = 2;
-        expect(wish._votes.grants).toBe(2);
+        expect(wish.grants).toBe(2);
     })
 
     it("can set vote.grants", () => {
         let wish = exampleWish();
         wish.denys = 2;
-        expect(wish._votes.denys).toBe(2);
+        expect(wish.denys).toBe(2);
     })
 
     it("returns the correct number of total votes", () => {

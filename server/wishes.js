@@ -1,31 +1,38 @@
 // Hardcoded initial list of wishes
 
 class Wish {
-    constructor(user, wish) {
+    constructor(name, wish) {
         if (arguments.length !== 2) {
             throw new Error("Wish class constructor takes 2 arguments.");
         }
 
-        this.owner = user;
+        this.name = name;
         this.wish = wish;
-        this._votes = {
-            grants: 0,
-            denys: 0
-        }
+        this.grants = 0;
+        this.denys = 0;
+        this.timestamp = new Date();
     }
 
     get grants() {
-        return this._votes.grants
+        return this._grants
     };
     set grants(value) {
-        this._votes.grants = value
+        if (Number.isInteger(value) && value >= 0) {
+            this._grants = value
+        } else {
+            throw new Error("Vote values must be positive");
+        }
     };
 
     get denys() {
-        return this._votes.denys
+        return this._denys;
     };
     set denys(value) {
-        return this._votes.denys = value
+        if (value >= 0) {
+            this._denys = value
+        } else {
+            throw new Error("Vote values must be positive");
+        }
     };
 
     totalVotes() {
