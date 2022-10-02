@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="./assets/wishClass.js"></script>
+    <script defer src="assets/index.js"></script>
+    <title>Wishing Well</title>
+</head>
+<body>
+    <h1>Welcome to the Wishing Well! 🌠</h1>
+
+    <form id="makeWish">
+        <div id="wish-input">
+            <label for="wish">Wish:</label>
+            <textarea id="wish" name="wish" rows="4" placeholder="Your wish goes here..."></textarea>
+        </div>
+        <div id="name-input">
+            <label for="name">Name:</label>
+            <input type="text" name="name" placeholder="Enter your name...">
+        </div>
+        <input type="submit" name="submit">
+    </form>
+
+    <h2>Recent wishes</h2>
+    <div id="wish-list"></div>
+</body>
+</html>

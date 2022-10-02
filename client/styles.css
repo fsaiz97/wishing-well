@@ -1,0 +1,18 @@
+.vote:hover {
+    background-color: green;
+}
+
+#wish-list {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+}
+
+.wish {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 3px;
+}
+
+.wish:hover {
+    background-color: rgba(128, 128, 128, 0.24);
+}
